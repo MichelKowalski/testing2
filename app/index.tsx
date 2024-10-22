@@ -2,62 +2,75 @@ import { useState } from "react";
 import { Text, View, Button, TextInput } from "react-native";
 
 export default function Index() {
-  const [counter, setCounter] = useState(0);
-  const [mynumber, setmynumber] = useState("");
-  const [errormsg, seterrormsg] = useState("");
+  const [myNumb, setMyNumb] = useState(0);
+  const [inputNumber, setInputNumber] = useState("");
+  const [errormsg, setErrormsg] = useState("");
 
   function addPlus() {
-    const isNotaNumber = Number(mynumber);
+    const notANumb = Number(inputNumber);
 
-    if (isNaN(isNotaNumber)) {
-      seterrormsg("INTE en siffra");
+    if (isNaN(notANumb)) {
+      setErrormsg("this is not a NUMB");
     } else {
-      seterrormsg("");
-
-      setCounter(isNotaNumber + counter);
-      if (counter >= 10) {
-        setCounter(0);
+      setErrormsg("");
+      setMyNumb(myNumb + notANumb);
+      if (myNumb >= 10) {
+        setMyNumb(0);
       }
     }
   }
 
   function addMinus() {
-    setCounter(counter - Number(mynumber));
+    const notANumb = Number(inputNumber);
 
-    if (counter <= 0) {
-      setCounter(0);
+    if (isNaN(notANumb)) {
+      setErrormsg("Not a minusNumber");
+    } else {
+      setErrormsg("");
+      setMyNumb(myNumb - notANumb);
+      if (myNumb <= 0) {
+        setMyNumb(0);
+      }
     }
   }
 
-  function addReset() {
-    setCounter(0);
+  function reset() {
+    setMyNumb(0);
   }
 
   return (
     <View
       style={{
+        backgroundColor: "grey",
         flex: 1,
-        justifyContent: "center",
         alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      {errormsg != "" && (
-        <Text style={{ borderWidth: 3, width: 200, height: 100 }}>
-          {errormsg}
-        </Text>
-      )}
+      <Text>{errormsg}</Text>
+      <Text style={{ fontSize: 100, color: "pink" }}>{myNumb}</Text>
       <TextInput
-        style={{ borderWidth: 3, width: 150, borderColor: "pink" }}
-        onChangeText={setmynumber}
-        value={mynumber}
+        onChangeText={setInputNumber}
+        value={inputNumber}
+        style={{
+          borderWidth: 2,
+          width: 300,
+          height: 50,
+          fontSize: 40,
+          fontStyle: "italic",
+        }}
       />
-
-      <Text style={{ fontSize: 30 }}>{counter}</Text>
       <Button title="PLUS" onPress={addPlus} />
 
-      {counter > 0 && <Button title="MINUS" onPress={addMinus} />}
-
-      <Button title="RESET" onPress={addReset} />
+      <Button title="MINUS" onPress={addMinus} />
+      {myNumb > 0 && (
+        <Button
+          title="RESET"
+          onPress={() => {
+            reset();
+          }}
+        />
+      )}
     </View>
   );
 }
